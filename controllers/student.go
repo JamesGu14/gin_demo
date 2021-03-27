@@ -57,28 +57,28 @@ func CreateStudent(c *gin.Context) {
 }
 
 // PUT /student/:id
-//func UpdateStudent(c *gin.Context) {
-//	// Get existing student
-//	existingStudent, err := services.FindStudent(c.Param("id"))
-//	if err != nil {
-//		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-//		return
-//	}
-//
-//	var input entities.UpdateStudentInput
-//	if err := c.ShouldBindJSON(&input); err != nil {
-//		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-//		return
-//	}
-//	services.UpdateStudent(existingStudent, input)
-//	c.JSON(http.StatusNonAuthoritativeInfo, gin.H{"message": "updated"})
-//}
+func UpdateStudent(c *gin.Context) {
+	var input entities.UpdateStudentInput
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	studentId, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid student id"})
+		return
+	}
+	services.UpdateStudent(uint(studentId), input)
+	c.JSON(http.StatusNonAuthoritativeInfo, gin.H{"message": "updated"})
+}
 
 // DELETE /student/:id
-//func DeleteStudent(c *gin.Context) {
-//	student_id, err := strconv.Atoi(c.Param("id"))
-//	if err != nil {
-//		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid student_id"})
-//	}
-//	services.DeleteStudent(student_id)
-//}
+func DeleteStudent(c *gin.Context) {
+	studentId, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid student id"})
+		return
+	}
+	services.DeleteStudent(uint(studentId))
+	c.JSON(http.StatusNonAuthoritativeInfo, gin.H{"message": "deleted"})
+}

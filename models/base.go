@@ -25,10 +25,10 @@ type BaseModel interface {
 	BulkAddItems(baseEntities []entities.BaseEntity) bool
 
 	// Update
-	UpdateItem(id int, baseEntity entities.BaseEntity) bool
+	UpdateItem(id uint, baseEntity entities.BaseEntity) bool
 	BulkUpdateItems(baseEntities []entities.BaseEntity) bool
 
 	// Delete
-	DeleteItem(id int) bool
-	BulkDeleteItems(ids []int) bool
+	DeleteItem(uid int) bool
+	BulkDeleteItems(ids []uint) bool
 }

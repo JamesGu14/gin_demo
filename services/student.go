@@ -35,11 +35,10 @@ func CreateStudent(newStudent entities.Student) {
 	new(models.StudentModel).AddItem(newStudent)
 }
 
-//
-//func UpdateStudent(student entities.Student, input entities.UpdateStudentInput) {
-//	models.UpdateStudent(student, input)
-//}
-//
-//func DeleteStudent(student_id int) {
-//	models.DeleteStudent(student_id)
-//}
+func UpdateStudent(id uint, input entities.UpdateStudentInput) {
+	new(models.StudentModel).UpdateItem(id, input)
+}
+
+func DeleteStudent(studentId uint) {
+	new(models.StudentModel).DeleteItem(studentId)
+}

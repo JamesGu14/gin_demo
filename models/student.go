@@ -36,7 +36,7 @@ func (s *StudentModel) BulkAddItems(baseEntities []entities.BaseEntity) bool {
 	panic("implement me")
 }
 
-func (s *StudentModel) UpdateItem(id int, baseEntity entities.BaseEntity) bool {
+func (s *StudentModel) UpdateItem(id uint, baseEntity entities.BaseEntity) bool {
 	_update := structs.Map(baseEntity)
 	util.DB.Model(&entities.Student{}).Where("id = ?", id).Updates(_update)
 	return true
@@ -46,11 +46,11 @@ func (s *StudentModel) BulkUpdateItems(baseEntities []entities.BaseEntity) bool 
 	panic("implement me")
 }
 
-func (s *StudentModel) DeleteItem(id int) bool {
+func (s *StudentModel) DeleteItem(id uint) bool {
 	util.DB.Delete(&entities.Student{}, id)
 	return true
 }
 
-func (s *StudentModel) BulkDeleteItems(ids []int) bool {
+func (s *StudentModel) BulkDeleteItems(ids []uint) bool {
 	panic("implement me")
 }

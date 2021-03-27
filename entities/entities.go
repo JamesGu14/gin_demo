@@ -5,6 +5,8 @@ import (
 	"time"
 )
 
+type BaseEntity interface{}
+
 type Teacher struct {
 	gorm.Model
 	UserName  string `gorm:"unique_index"`

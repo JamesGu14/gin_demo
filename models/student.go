@@ -8,13 +8,7 @@ import (
 
 type StudentModel struct{}
 
-func (sm *StudentModel) GetStudents(paging Paging) []entities.Student {
-	var students []entities.Student
-	util.DB.Limit(paging.PageSize).Offset(paging.PageSize * paging.PageSize).Find(&students)
-	return students
-}
-
-func GetStudent(id int) (entities.Student, error) {
+func (s *StudentModel) GetById(id int) (entities.BaseEntity, error) {
 	var student entities.Student
 	if err := util.DB.Where("id = ?", id).First(&student).Error; err != nil {
 		return student, err
@@ -22,25 +16,41 @@ func GetStudent(id int) (entities.Student, error) {
 	return student, nil
 }
 
-func CreateStudent(newStudent entities.Student) {
+func (s *StudentModel) GetByPage(page Paging) ([]entities.BaseEntity, error) {
+	var students []entities.Student
+	util.DB.Limit(page.PageSize).Offset(page.PageSize * page.PageSize).Find(&students)
+	baseEntities := make([]entities.BaseEntity, 0)
+	for _, e := range students {
+		baseEntities = append(baseEntities, e)
+	}
+	return baseEntities, nil
+}
+
+func (s *StudentModel) AddItem(baseEntity entities.BaseEntity) bool {
+	newStudent := baseEntity.(entities.Student)
 	util.DB.Create(&newStudent)
+	return true
 }
 
-type UpdateStudentInput2 struct {
-	Password string
+func (s *StudentModel) BulkAddItems(baseEntities []entities.BaseEntity) bool {
+	panic("implement me")
 }
 
-func UpdateStudent(existingStudent entities.Student, updateStudent entities.UpdateStudentInput) {
-	//DB.Model(&existingStudent).Updates(updateStudent)
-	//_birthDay := time.Date(1990, 5, 11, 20, 34, 58, 0, time.UTC)
-	_update := structs.Map(updateStudent)
-	util.DB.Model(&existingStudent).Updates(_update)
+func (s *StudentModel) UpdateItem(id int, baseEntity entities.BaseEntity) bool {
+	_update := structs.Map(baseEntity)
+	util.DB.Model(&entities.Student{}).Where("id = ?", id).Updates(_update)
+	return true
 }
 
-func DeleteStudent(student_id int) {
-	util.DB.Delete(&entities.Student{}, student_id)
+func (s *StudentModel) BulkUpdateItems(baseEntities []entities.BaseEntity) bool {
+	panic("implement me")
 }
 
-func BulkDeleteStudent(studentIds []int) {
+func (s *StudentModel) DeleteItem(id int) bool {
+	util.DB.Delete(&entities.Student{}, id)
+	return true
+}
 
+func (s *StudentModel) BulkDeleteItems(ids []int) bool {
+	panic("implement me")
 }

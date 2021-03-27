@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+	"gin_demo/entities"
+	"time"
+)
 
 type Paging struct {
 	Page     int `default:"0"`
@@ -14,18 +17,18 @@ type DeleteItemInput struct {
 
 type BaseModel interface {
 	// Find
-	GetById(id int)
-	GetByPage(page Paging)
+	GetById(id int) (entities.BaseEntity, error)
+	GetByPage(page Paging) ([]entities.BaseEntity, error)
 
 	// Create
-	AddItem()
-	BulkAddItems()
+	AddItem(baseEntity entities.BaseEntity) bool
+	BulkAddItems(baseEntities []entities.BaseEntity) bool
 
 	// Update
-	UpdateItem()
-	BulkUpdateItems()
+	UpdateItem(id int, baseEntity entities.BaseEntity) bool
+	BulkUpdateItems(baseEntities []entities.BaseEntity) bool
 
 	// Delete
-	DeleteItem()
-	BulkDeleteItems()
+	DeleteItem(id int) bool
+	BulkDeleteItems(ids []int) bool
 }

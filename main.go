@@ -19,9 +19,16 @@ func setupRouter() *gin.Engine {
 	router.GET("/user/:name", controllers.UserValue)
 	// Student related
 	router.GET("/student", controllers.StudentPage)
-	router.GET("/student/:id", controllers.FindStudent)
-	router.POST("/student", controllers.CreateStudent)
-	router.PUT("/student/:id", controllers.UpdateStudent)
+	router.GET("/student/create", controllers.StudentCreatePage)
+	//router.GET("/student/:id", controllers.FindStudent)
+	//router.POST("/student", controllers.CreateStudent)
+	//router.PUT("/student/:id", controllers.UpdateStudent)
+
+	// Teacher Related
+
+	// Class Related
+
+	// Course Related
 
 	return router
 }

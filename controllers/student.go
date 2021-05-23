@@ -24,6 +24,12 @@ func StudentPage(c *gin.Context) {
 	})
 }
 
+func StudentCreatePage(c *gin.Context) {
+	c.HTML(http.StatusOK, "student/create.tmpl", gin.H{
+		"title": "Create Student",
+	})
+}
+
 // GET /student
 // Find all students
 func FindStudents(c *gin.Context) {

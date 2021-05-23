@@ -22,6 +22,14 @@ func (sm *StudentModel) GetStudent(id int) (dao.Student, error) {
 	return student, nil
 }
 
+func StudentSignIn(username string, password string) (dao.Student, error) {
+	var student dao.Student
+	if err := util.DB.Where("user_name = ? and password = ?", username, password).First(&student).Error; err != nil {
+		return student, err
+	}
+	return student, nil
+}
+
 func (sm *StudentModel) CreateStudent(newStudent dao.Student) {
 	util.DB.Create(&newStudent)
 }

@@ -4,10 +4,24 @@ import (
 	"errors"
 	"gin_demo/dao"
 	"gin_demo/models"
+	"gin_demo/util"
 	"strconv"
 )
 
 var studentModel models.StudentModel = models.StudentModel{}
+
+// returns token
+func StudentSignIn(username string, password string) (string, bool) {
+	if username == "" || password == "" {
+		return "", false
+	}
+	student, err := models.StudentSignIn(username, password)
+	if err != nil {
+		return "", false
+	} else {
+		return util.GenerateJwtToken(student.ID), true
+	}
+}
 
 func FindStudents(paging models.Paging) []dao.Student {
 	return studentModel.GetStudents(paging)

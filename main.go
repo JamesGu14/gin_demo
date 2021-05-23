@@ -18,9 +18,10 @@ func setupRouter() *gin.Engine {
 	router.GET("/ping", controllers.Home)
 	router.GET("/user/:name", controllers.UserValue)
 	// Student related
+	router.POST("/signin", controllers.SignIn)
 	router.GET("/student", controllers.StudentPage)
 	router.GET("/student/create", controllers.StudentCreatePage)
-	router.DELETE("/student/:id", controllers.DeleteStudent)
+	router.DELETE("/student/:id", util.Authentication(), controllers.DeleteStudent)
 	//router.GET("/student/:id", controllers.FindStudent)
 	router.POST("/student", controllers.CreateStudent)
 	//router.PUT("/student/:id", controllers.UpdateStudent)

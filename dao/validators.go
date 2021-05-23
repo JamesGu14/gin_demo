@@ -2,6 +2,11 @@ package dao
 
 import "time"
 
+type SignInInput struct {
+	UserName string `binding:"required"`
+	Password string `binding:"required"`
+}
+
 // Validation structs
 type CreateStudentIntput struct {
 	UserName  string     `binding:"required"`

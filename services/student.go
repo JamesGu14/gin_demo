@@ -7,8 +7,10 @@ import (
 	"strconv"
 )
 
+var studentModel models.StudentModel = models.StudentModel{}
+
 func FindStudents(paging models.Paging) []entities.Student {
-	return models.GetStudents(paging)
+	return studentModel.GetStudents(paging)
 }
 
 func FindStudent(studentIdStr string) (entities.Student, error) {
@@ -16,7 +18,7 @@ func FindStudent(studentIdStr string) (entities.Student, error) {
 	if err != nil {
 		return entities.Student{}, errors.New("invalid student id")
 	}
-	student, err := models.GetStudent(studentId)
+	student, err := studentModel.GetStudent(studentId)
 	if err != nil {
 		return entities.Student{}, errors.New("student does not exist")
 	}
@@ -24,7 +26,7 @@ func FindStudent(studentIdStr string) (entities.Student, error) {
 }
 
 func CreateStudent(newStudent entities.Student) {
-	models.CreateStudent(newStudent)
+	studentModel.CreateStudent(newStudent)
 }
 
 func UpdateStudent(student entities.Student, input entities.UpdateStudentInput) {

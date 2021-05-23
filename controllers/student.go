@@ -9,12 +9,28 @@ import (
 	"strconv"
 )
 
+// Load Student Page
+func StudentPage(c *gin.Context) {
+	pageIdx, err := strconv.Atoi(c.Query("page"))
+	if err != nil {
+		//c.JSON(http.StatusBadRequest, gin.H{"message": "Incorrect page number"})
+		pageIdx = 0
+	}
+
+	students := services.FindStudents(models.Paging{Page: pageIdx})
+	c.HTML(http.StatusOK, "student/list.tmpl", gin.H{
+		"title":    "Dashboard",
+		"students": students,
+	})
+}
+
 // GET /student
 // Find all students
 func FindStudents(c *gin.Context) {
 	pageIdx, err := strconv.Atoi(c.Query("page"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Incorrect page number"})
+		return
 	}
 	students := services.FindStudents(models.Paging{Page: pageIdx})
 	c.JSON(http.StatusOK, gin.H{"data": students})

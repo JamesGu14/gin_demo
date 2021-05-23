@@ -11,11 +11,14 @@ import (
 func setupRouter() *gin.Engine {
 	//gin.DisableConsoleColor()
 	router := gin.Default()
+	router.LoadHTMLGlob("templates/**/*")
+	router.Static("/assets", "./assets")
 
+	router.GET("/", controllers.Dashboard)
 	router.GET("/ping", controllers.Home)
 	router.GET("/user/:name", controllers.UserValue)
 	// Student related
-	router.GET("/student", controllers.FindStudents)
+	router.GET("/student", controllers.StudentPage)
 	router.GET("/student/:id", controllers.FindStudent)
 	router.POST("/student", controllers.CreateStudent)
 	router.PUT("/student/:id", controllers.UpdateStudent)

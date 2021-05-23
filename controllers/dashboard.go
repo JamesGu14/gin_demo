@@ -12,6 +12,12 @@ func init() {
 	db["kara"] = "hello Kara"
 }
 
+func Dashboard(c *gin.Context) {
+	c.HTML(http.StatusOK, "dashboard/dashboard.tmpl", gin.H{
+		"title": "Dashboard",
+	})
+}
+
 func Home(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": "pong",

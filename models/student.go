@@ -14,7 +14,7 @@ func (sm *StudentModel) GetStudents(paging Paging) []entities.Student {
 	return students
 }
 
-func GetStudent(id int) (entities.Student, error) {
+func (sm *StudentModel) GetStudent(id int) (entities.Student, error) {
 	var student entities.Student
 	if err := util.DB.Where("id = ?", id).First(&student).Error; err != nil {
 		return student, err
@@ -22,7 +22,7 @@ func GetStudent(id int) (entities.Student, error) {
 	return student, nil
 }
 
-func CreateStudent(newStudent entities.Student) {
+func (sm *StudentModel) CreateStudent(newStudent entities.Student) {
 	util.DB.Create(&newStudent)
 }
 

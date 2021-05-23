@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"gin_demo/entities"
+	"gin_demo/dao"
 	"gin_demo/models"
 	"gin_demo/services"
 	"github.com/gin-gonic/gin"
@@ -25,8 +25,9 @@ func StudentPage(c *gin.Context) {
 }
 
 func StudentCreatePage(c *gin.Context) {
-	c.HTML(http.StatusOK, "student/create.tmpl", gin.H{
+	c.HTML(http.StatusOK, "student/create_or_edit.tmpl", gin.H{
 		"title": "Create Student",
+		"page":  "create",
 	})
 }
 
@@ -56,13 +57,13 @@ func FindStudent(c *gin.Context) {
 // POST /student
 // Add a new student
 func CreateStudent(c *gin.Context) {
-	var input entities.CreateStudentIntput
+	var input dao.CreateStudentIntput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	newStudent := entities.Student{
+	newStudent := dao.Student{
 		UserName:  input.UserName,
 		Password:  input.Password,
 		FullName:  input.FullName,
@@ -72,7 +73,7 @@ func CreateStudent(c *gin.Context) {
 		IsMonitor: input.IsMonitor,
 	}
 	services.CreateStudent(newStudent)
-	c.JSON(http.StatusOK, gin.H{"message": "Succeed"})
+	c.JSON(http.StatusOK, gin.H{"message": "succeed"})
 }
 
 // PUT /student/:id
@@ -84,7 +85,7 @@ func UpdateStudent(c *gin.Context) {
 		return
 	}
 
-	var input entities.UpdateStudentInput
+	var input dao.UpdateStudentInput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -98,6 +99,8 @@ func DeleteStudent(c *gin.Context) {
 	student_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid student_id"})
+		return
 	}
 	services.DeleteStudent(student_id)
+	c.JSON(http.StatusNonAuthoritativeInfo, gin.H{"message": "succeed"})
 }

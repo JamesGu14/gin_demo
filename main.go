@@ -20,8 +20,9 @@ func setupRouter() *gin.Engine {
 	// Student related
 	router.GET("/student", controllers.StudentPage)
 	router.GET("/student/create", controllers.StudentCreatePage)
+	router.DELETE("/student/:id", controllers.DeleteStudent)
 	//router.GET("/student/:id", controllers.FindStudent)
-	//router.POST("/student", controllers.CreateStudent)
+	router.POST("/student", controllers.CreateStudent)
 	//router.PUT("/student/:id", controllers.UpdateStudent)
 
 	// Teacher Related

@@ -145,7 +145,7 @@
                         <td>{{.Birthday}}</td>
                         <td>{{.ClassID}}</td>
                         <td>{{.IsMonitor}}</td>
-                        <td><a href="/student/delete/{{ .Model.ID}}" class="btn btn-danger btn-sm">Delete</a></td>
+                        <td><a onclick="delete_student({{.Model.ID}})" class="btn btn-danger btn-sm">Delete</a></td>
                     </tr>
                     {{ end }}
                     </tbody>
@@ -164,6 +164,25 @@
         crossorigin="anonymous"></script>
 <script src="/assets/js/dashboard/dashboard.js"></script>
 </body>
+<script src="/assets/js/jquery-3.6.0.min.js"></script>
+<script>
+
+    function delete_student(student_id) {
+        $.ajax({
+            type: "DELETE",
+            url: "/student/" + student_id,
+            success: function(data) {
+                debugger
+                if (data.message === 'succeed') {
+                    location.reload()
+                } else {
+                    alert('Failed')
+                }
+            }
+        })
+    }
+
+</script>
 </html>
 
 {{ end }}

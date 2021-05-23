@@ -1,7 +1,7 @@
 package util
 
 import (
-	"gin_demo/entities"
+	"gin_demo/dao"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -31,8 +31,8 @@ func GetDB() *gorm.DB {
 }
 
 func Migrate(db *gorm.DB) {
-	db.AutoMigrate(&entities.Teacher{})
-	db.AutoMigrate(&entities.Student{})
-	db.AutoMigrate(&entities.Class{})
-	db.AutoMigrate(&entities.Course{})
+	db.AutoMigrate(&dao.Teacher{})
+	db.AutoMigrate(&dao.Student{})
+	db.AutoMigrate(&dao.Class{})
+	db.AutoMigrate(&dao.Course{})
 }

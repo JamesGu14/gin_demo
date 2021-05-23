@@ -1,0 +1,117 @@
+<!doctype html>
+{{ define "student/create_or_edit.tmpl" }}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.83.1">
+
+    {{ if eq .page "create" }}
+    <title>Create Student</title>
+    {{ else }}
+    <title>Edit Student</title>
+    {{ end }}
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="/assets/css/create/signin.css" rel="stylesheet">
+</head>
+<body class="text-center">
+
+<main class="form-signin">
+
+    {{ if eq .page "create" }}
+    <form>
+    {{ else }}
+    <form>
+    {{ end }}
+
+        {{ if eq .page "create" }}
+        <h1 class="h3 mb-3 fw-normal">Create Student</h1>
+        {{ else }}
+        <h1 class="h3 mb-3 fw-normal">Edit Student</h1>
+        {{ end }}
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="userName" name="userName" placeholder="User Name">
+            <label for="userName">User Name</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            <label for="password">Password</label>
+        </div>
+        <div class="form-floating">
+            <input type="email" class="form-control" id="emailAddress" name="emailAddress" placeholder="name@example.com">
+            <label for="emailAddress">Email address</label>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Full Name">
+            <label for="fullName">Full Name</label>
+        </div>
+        <div class="form-floating">
+            <input type="date" class="form-control" id="birthDay" name="birthDay" placeholder="Birthday">
+            <label for="birthDay">Birthday</label>
+        </div>
+        <p class="btn btn-primary" id="submitCreate">Submit</p>
+    </form>
+</main>
+
+</body>
+<script src="/assets/js/jquery-3.6.0.min.js"></script>
+<script>
+    $('#submitCreate').click(function () {
+        username = $('#userName').val()
+        password = $('#password').val()
+        emailAddress = $('#emailAddress').val()
+        fullName = $('#fullName').val()
+        birthDay = new Date($('#birthDay').val())
+        debugger
+        $.ajax({
+            type: "POST",
+            url: "/student",
+            data: JSON.stringify({
+                "UserName": username,
+                "Password": password,
+                "Email": emailAddress,
+                "FullName": fullName,
+                "Birthday": birthDay,
+            }),
+            contentType: "application/json",
+            dataType: "json",
+            success: function(data) {
+                debugger
+                if (data.message === 'succeed') {
+                    alert('Succeed')
+                    location.reload()
+                } else {
+                    alert('Failed')
+                }
+            }
+        })
+    })
+</script>
+</html>
+{{ end }}

@@ -15,3 +15,7 @@ https://github.com/dgrijalva/jwt-go
 https://github.com/vmihailenco/msgpack
 
 https://msgpack.uptrace.dev/
+
+- logger
+
+- Config center

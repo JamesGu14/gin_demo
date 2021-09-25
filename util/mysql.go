@@ -8,7 +8,7 @@ import (
 
 var DB *gorm.DB
 
-func InitDB() *gorm.DB {
+func ConnectMySQL() *gorm.DB {
 	database, err := gorm.Open(mysql.New(mysql.Config{
 		DSN:                       "root:root@tcp(127.0.0.1:3306)/gin_demo?charset=utf8mb4&parseTime=True&loc=Local", // data source name
 		DefaultStringSize:         256,                                                                               // default size for string fields

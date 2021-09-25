@@ -4,8 +4,12 @@ import (
 	"errors"
 	"gin_demo/entities"
 	"gin_demo/models"
+	"gin_demo/util"
 	"strconv"
+	"context"
 )
+
+var ctx = context.Background()
 
 func FindStudents(paging models.Paging) ([]entities.Student, error) {
 	students := make([]entities.Student, 0)
@@ -20,6 +24,12 @@ func FindStudents(paging models.Paging) ([]entities.Student, error) {
 }
 
 func FindStudent(studentIdStr string) (entities.Student, error) {
+	// Redis Cache operation
+	err := util.R.Set(ctx, "find_student", 1, 0).Err()
+	if err != nil {
+		panic(err)
+	}
+
 	studentId, err := strconv.Atoi(studentIdStr)
 	if err != nil {
 		return entities.Student{}, errors.New("invalid student id")

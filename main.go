@@ -32,8 +32,9 @@ func main() {
 	}
 
 	// Prepare DB connection
-	db := util.InitDB()
+	db := util.ConnectMySQL()
 	util.Migrate(db)
+	util.ConnectRedis()
 
 	// Setup router
 	router := setupRouter()

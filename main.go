@@ -1,16 +1,15 @@
 package main
 
 import (
+	"gin_demo/common"
 	"gin_demo/controllers"
-	"gin_demo/util"
 	"github.com/gin-gonic/gin"
 	"log"
 	"os"
 )
 
-func setupRouter() *gin.Engine {
+func SetupRouter(router *gin.Engine) {
 	//gin.DisableConsoleColor()
-	router := gin.Default()
 
 	router.GET("/ping", controllers.Home)
 	router.GET("/user/:name", controllers.UserValue)
@@ -20,23 +19,24 @@ func setupRouter() *gin.Engine {
 	router.POST("/student", controllers.CreateStudent)
 	router.PUT("/student/:id", controllers.UpdateStudent)
 	router.DELETE("/student/:id", controllers.DeleteStudent)
-	return router
 }
 
 func main() {
+
+	// Prepare DB connection
+	//db := common.ConnectMySQL()
+	//common.Migrate(db)
+	//common.ConnectRedis()
+	router := gin.Default()
+	router.Use(common.LoggerMiddleware())
 	// Get Server Port
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 		log.Printf("Defaulting to port %s", port)
 	}
-
-	// Prepare DB connection
-	db := util.ConnectMySQL()
-	util.Migrate(db)
-	util.ConnectRedis()
-
 	// Setup router
-	router := setupRouter()
+	SetupRouter(router)
+
 	router.Run(":" + port)
 }

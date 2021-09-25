@@ -4,7 +4,7 @@ import (
 	"errors"
 	"gin_demo/entities"
 	"gin_demo/models"
-	"gin_demo/util"
+	"gin_demo/common"
 	"strconv"
 	"context"
 )
@@ -25,7 +25,7 @@ func FindStudents(paging models.Paging) ([]entities.Student, error) {
 
 func FindStudent(studentIdStr string) (entities.Student, error) {
 	// Redis Cache operation
-	err := util.R.Set(ctx, "find_student", 1, 0).Err()
+	err := common.R.Set(ctx, "find_student", 1, 0).Err()
 	if err != nil {
 		panic(err)
 	}

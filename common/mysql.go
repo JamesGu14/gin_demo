@@ -1,4 +1,4 @@
-package util
+package common
 
 import (
 	"gin_demo/entities"
